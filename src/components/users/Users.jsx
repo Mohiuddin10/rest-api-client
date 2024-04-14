@@ -1,15 +1,31 @@
+import axios from "axios";
 
 const Users = () => {
     const handleAddUser = (e) => {
         e.preventDefault();
         const form = e.target;
         const userName = form.userName.value;
-        const email = form.email.value;
+        const age = form.age.value;
         const newUser = {
             userName: userName,
-            email: email
+            age: age
         }
         console.log(newUser);
+        // axios({
+        //     method: "post",
+        //     url: 'http://localhost:5000/api/users',
+        //     newUser: newUser
+        // })
+
+        fetch('http://localhost:5000/api/users', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newUser)
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
     }
     return (
         <div className="hero min-h-screen bg-base-200">
@@ -27,9 +43,9 @@ const Users = () => {
                         </div>
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text">User email</span>
+                                <span className="label-text">User age</span>
                             </label>
-                            <input type="email" placeholder="user email" className="input input-bordered" name="email" required />
+                            <input type="number" placeholder="user age" className="input input-bordered" name="age" required />
                         </div>
                         <div className="form-control mt-6">
                             <input className="btn btn-primary" type="submit" value="Add User" />
