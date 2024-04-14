@@ -16,6 +16,11 @@ const AllUsers = () => {
         axios.get(url)
             .then(data => setUsers(data.data))
     }, []);
+
+    const deleteUser = id => {
+        const remainedUsers = users.filter(user => user.id !== id);
+        setUsers(remainedUsers);
+    }
     return (
         <div>
             <h2 className="">Users found: {users.length}</h2>
@@ -23,7 +28,8 @@ const AllUsers = () => {
                 {
                     users.map(user => <SingleUsers
                         key={user.id}
-                        user={user}></SingleUsers>)
+                        user={user}
+                        deleteUser={deleteUser}></SingleUsers>)
                 }
             </div>
         </div>
